@@ -22,7 +22,11 @@ func NewGeo() *Geo {
 		reader, err = geoip2.Open("GeoLite2-Country.mmdb")
 	}
 	if err != nil {
-		slog.Warn("Cannot open Country.mmdb or GeoLite2-Country.mmdb")
+		// Also try the common MaxMind download path
+		reader, err = geoip2.Open("GeoIP2-Country.mmdb")
+	}
+	if err != nil {
+		slog.Warn("Cannot open Country.mmdb, GeoLite2-Country.mmdb, or GeoIP2-Country.mmdb")
 		return geo
 	}
 	slog.Info("Enabled GeoIP")
