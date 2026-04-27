@@ -41,5 +41,9 @@ func (o *Geo) GetGeo(ip net.IP) string {
 		slog.Debug("Error reading geo", "err", err)
 		return "N/A"
 	}
+	// Return "XX" for unknown country codes instead of empty string
+	if country.Country.IsoCode == "" {
+		return "XX"
+	}
 	return country.Country.IsoCode
 }
